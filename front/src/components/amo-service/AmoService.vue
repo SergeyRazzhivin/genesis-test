@@ -17,6 +17,7 @@
 <style scoped lang="scss">
   .amo-service {
     display: flex;
+    align-items: start;
     gap: 1rem;
     .left-bar {
       display: flex;
