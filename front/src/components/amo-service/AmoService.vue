@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import AmoEntityList from './components/AmoEntityList.vue'
-  import CreateEntityButton from './components/CreateEntityButton.vue'
+  import CreateEntityButton from './components/EntityButtonCreate.vue'
+  import AmoEntityList from './components/EntityList.vue'
   import EntityViewer from './components/EntityViewer.vue'
 </script>
 

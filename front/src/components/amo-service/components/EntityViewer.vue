@@ -60,6 +60,7 @@
         margin: 0;
         margin-bottom: 0.5rem;
         text-align: center;
+        font-weight: 500;
       }
     }
     .card {

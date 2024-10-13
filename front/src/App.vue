@@ -3,7 +3,6 @@
   import useAuth from './useAuth.ts'
 
   const { auth } = useAuth()
-
   auth()
 </script>
 

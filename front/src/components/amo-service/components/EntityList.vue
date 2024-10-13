@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue'
 
+  import ChevronDownSvg from '../../shared/svg/ChevronDownSvg.vue'
   import useAmoService from '../useAmoService.ts'
 
   const { entityActions, selectedAction } = useAmoService()
@@ -29,30 +30,7 @@
         @click="openList"
       >
         <div>{{ selectedAction }}</div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="none"
-            stroke="currentColor"
-            stroke-dasharray="10"
-            stroke-dashoffset="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 15l-5 -5M12 15l5 -5"
-          >
-            <animate
-              fill="freeze"
-              attributeName="stroke-dashoffset"
-              dur="0.3s"
-              values="10;0"
-            />
-          </path>
-        </svg>
+        <ChevronDownSvg />
       </div>
       <div
         v-if="isExpanded"
@@ -67,7 +45,8 @@
           ]"
           @click="setEntityAction(item)"
         >
-          {{ item }}
+          <div class="check">✔</div>
+          <div>{{ item }}</div>
         </div>
       </div>
     </div>
@@ -110,8 +89,18 @@
         .custom-select-dropdown-item {
           padding: 0.3rem 0.5rem;
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          transition: 0.1s linear;
+          .check {
+            opacity: 0;
+          }
           &.active {
-            background-color: #f3f3f3;
+            background-color: #f1f1f1;
+            .check {
+              opacity: 1;
+            }
           }
           &:hover {
             background-color: #f3f3f3;

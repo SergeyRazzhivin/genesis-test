@@ -1,86 +1,47 @@
 import { ref } from 'vue'
 
 import appAxios from '../../appAxios.ts'
+import { company, contact, deal } from '../shared/mockData.ts'
 
-const deal = [
-  {
-    name: 'SR',
-    created_by: 0,
-    price: 20000,
-    tags_to_add: [
-      {
-        name: 'Первый тег',
-      },
-      {
-        id: 217261,
-      },
-    ],
-  },
-]
-const contact = [
-  {
-    first_name: 'Петр',
-    last_name: 'Смирнов',
-  },
-]
-const company = [
-  {
-    name: 'АО Рога и Копыта',
-    custom_fields_values: [
-      {
-        field_code: 'PHONE',
-        values: [
-          {
-            value: '+7912322222',
-            enum_code: 'WORK',
-          },
-        ],
-      },
-    ],
-  },
-]
+import { ACTION_TYPES } from './amoServiceTypes.ts'
+
 const deals = ref([])
 const contacts = ref([])
 const companies = ref([])
-const entityActions = ref(['Не выбрано', 'Сделка', 'Контакт', 'Компания'])
-const selectedAction = ref(entityActions.value[0])
+const entityActions = ref<ACTION_TYPES>([
+  ACTION_TYPES.NOT_SELECTED,
+  ACTION_TYPES.DEAL,
+  ACTION_TYPES.CONTACT,
+  ACTION_TYPES.COMPANY,
+])
+const selectedAction = ref(ACTION_TYPES.NOT_SELECTED)
 const isPreloader = ref(false)
 export default function () {
   async function createDeal() {
-    const { data } = await appAxios.post(
-      'http://localhost:3000/create-deal',
-      deal,
-    )
-    console.log(data)
+    const { data } = await appAxios.post('/create-deal', deal)
     deals.value.push(...data._embedded.leads)
     return deals
   }
   async function createContact() {
-    const { data } = await appAxios.post(
-      'http://localhost:3000/create-contact',
-      contact,
-    )
+    const { data } = await appAxios.post('/create-contact', contact)
     contacts.value.push(...data._embedded.contacts)
     return data
   }
   async function createCompany() {
-    const { data } = await appAxios.post(
-      'http://localhost:3000/create-company',
-      company,
-    )
+    const { data } = await appAxios.post('/create-company', company)
     companies.value.push(...data._embedded.companies)
     return data
   }
 
   async function createEntity(entityName) {
     isPreloader.value = true
-    if (entityName === 'Сделка') {
+    if (entityName === ACTION_TYPES.DEAL) {
       await createDeal()
     }
-    if (entityName === 'Контакт') {
+    if (entityName === ACTION_TYPES.CONTACT) {
       await createContact()
     }
-    if (entityName === 'Компания') {
+    if (entityName === ACTION_TYPES.COMPANY) {
       await createCompany()
     }
     isPreloader.value = false
