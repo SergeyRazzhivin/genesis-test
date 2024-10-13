@@ -1,10 +1,9 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
-import { AppService } from './app.service';
 import axios from 'axios';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor() {}
 
   @Get()
   async auth(@Res() res) {
